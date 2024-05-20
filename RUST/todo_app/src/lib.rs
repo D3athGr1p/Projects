@@ -15,43 +15,8 @@ pub enum State {
 
 impl State {
     pub fn add(query: String, file: &mut File) -> Result<(), Box<dyn Error>> {
-        let query: String = "Pending: ".to_owned() + &query;
+        let query: String = format!("Pending: {}\n", query);
         Ok(file.write_all(query.as_bytes())?)
-    }
-
-    pub fn remove(query: String, file: &mut File) -> Result<(), Box<dyn Error>> {
-        let mut updated_contents = String::new();
-        let content = BufReader::new(&mut *file);
-        for line in content.lines() {
-            let line = line?;
-            if !line.contains(&query) {
-                updated_contents.push_str(&line);
-                updated_contents.push('\n');
-            }
-        }
-        file.set_len(0)?;
-        file.seek(std::io::SeekFrom::Start(0))?;
-        file.write_all(updated_contents.as_bytes())?;
-
-        Ok(())
-    }
-
-    pub fn done(query: String, file: &mut File) -> Result<(), Box<dyn Error>> {
-        let mut updated_contents = String::new();
-        let content = BufReader::new(&mut *file);
-        for line in content.lines() {
-            let mut line = line?;
-            if line.contains(&query) {
-                line = line.replace("Pending", "Done");
-            }
-            updated_contents.push_str(&line);
-            updated_contents.push('\n');
-        }
-        file.set_len(0)?;
-        file.seek(std::io::SeekFrom::Start(0))?;
-        file.write_all(updated_contents.as_bytes())?;
-
-        Ok(())
     }
 
     pub fn read(file: File) -> Result<(), Box<dyn Error>> {
@@ -59,6 +24,42 @@ impl State {
         for line in content.lines() {
             println!("{}", line?);
         }
+
+        Ok(())
+    }
+
+    pub fn remove_or_done(
+        state: State,
+        query: String,
+        file: &mut File,
+        replace: Option<(&str, &str)>,
+    ) -> Result<(), Box<dyn Error>> {
+        let mut updated_contents = String::new();
+        let content = BufReader::new(&*file);
+        for line in content.lines() {
+            let mut line: String = line?;
+            match state {
+                State::Done => {
+                    if let Some((old, new)) = replace {
+                        if line.contains(&query) {
+                            line = line.replace(old, new);
+                        }
+                        updated_contents.push_str(&line);
+                        updated_contents.push('\n');
+                    }
+                }
+                State::Remove => {
+                    if !line.contains(&query) {
+                        updated_contents.push_str(&line);
+                        updated_contents.push('\n');
+                    }
+                }
+                _ => return Err(format!("invalid operation: {}", query).into()),
+            }
+        }
+        file.set_len(0)?;
+        file.seek(std::io::SeekFrom::Start(0))?;
+        file.write_all(updated_contents.as_bytes())?;
 
         Ok(())
     }
@@ -103,9 +104,21 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
         .open(FILENAME)?;
 
     match &config.operation {
-        State::Add => Ok(State::add(config.query, &mut file)?),
-        State::Remove => Ok(State::remove(config.query, &mut file)?),
-        State::Done => Ok(State::done(config.query, &mut file)?),
-        State::Read => Ok(State::read(file)?),
-    }
+        State::Add => State::add(config.query, &mut file)?,
+        State::Remove => State::remove_or_done(
+            State::Remove,
+            config.query,
+            &mut file,
+            Some(("Pending", "Done")),
+        )?,
+        State::Done => State::remove_or_done(
+            State::Done,
+            config.query,
+            &mut file,
+            Some(("Pending", "Done")),
+        )?,
+        State::Read => State::read(file)?,
+    };
+
+    Ok(())
 }
