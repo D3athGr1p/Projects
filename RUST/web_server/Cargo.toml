@@ -1,0 +1,10 @@
+[package]
+name = "web_server"
+version = "0.1.0"
+edition = "2021"
+authors = ["Kishan Sudani"]
+description = "This is multi-threaded web server, creating this project for learning purpose only"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
