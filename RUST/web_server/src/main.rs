@@ -2,32 +2,35 @@ use std::{
     fs,
     io::{BufRead, BufReader, Write},
     net::{TcpListener, TcpStream},
+    thread,
+    time::Duration,
 };
+
+use web_server::ThreadPool;
 
 fn handle_incoming_request(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&mut stream);
     let request_line = buf_reader.lines().next().unwrap().unwrap();
 
-    let status_line = "HTTP/1.1";
-    let mut response_content: String = String::new();
-    let mut response_content_length = 0;
-    let mut response = String::new();
+    let (status_line, response_file) = match &request_line[..] {
+        "GET / HTTP/1.1" => ("HTTP/1.1 200 OK", "index.html"),
+        "GET /slow HTTP/1.1" => {
+            thread::sleep(Duration::from_secs(5));
+            ("HTTP/1.1 200 OK", "response.html")
+        }
+        _ => ("HTTP/1.1 404 Not Found", "404.html"),
+    };
 
-    if request_line == "GET / HTTP/1.1" {
-        response_content = fs::read_to_string("index.html").unwrap();
-        response_content_length = response_content.len();
-        response = format!(
-            "{} 200 OK\r\nContent-Length: {}\r\n\r\n{}",
-            status_line, response_content_length, response_content
-        );
-    } else {
-        response_content = fs::read_to_string("404.html").unwrap();
-        response_content_length = response_content.len();
-        response = format!(
-            "{} 404 Not Found\r\nContent-Length: {}\r\n\r\n{}",
-            status_line, response_content_length, response_content
-        );
-    }
+    let response_content = fs::read_to_string(response_file).unwrap();
+
+    let response = format!(
+        "{}\r\nContent-Length: {}\r\n\r\n{}",
+        status_line,
+        response_content.len(),
+        response_content
+    );
+
+    println!("{response}");
 
     stream.write(response.as_bytes()).unwrap();
     stream.flush().unwrap();
@@ -36,6 +39,8 @@ fn handle_incoming_request(mut stream: TcpStream) {
 fn main() {
     const HOST: &str = "0.0.0.0";
     const PORT: &str = "8080";
+
+    let pool = ThreadPool::new(100);
 
     let end_point = format!("{}:{}", HOST, PORT);
 
@@ -46,6 +51,8 @@ fn main() {
     for stream in listener.incoming() {
         let incoming = stream.unwrap();
 
-        handle_incoming_request(incoming);
+        pool.execute(|| {
+            handle_incoming_request(incoming);
+        });
     }
 }
