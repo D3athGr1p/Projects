@@ -29,7 +29,7 @@ pub enum FileOperations {
 impl FileOperations {
     pub fn operation(config: ParsedConfig) -> Result<(), Box<dyn Error>> {
         println!(
-            "{:?} file from {} to {}",
+            "{:?}ing file from {} to {}",
             config.file_operation, config.from, config.to
         );
 
@@ -149,7 +149,7 @@ pub fn parse_args(args: &Vec<String>) -> Result<Config, &'static str> {
             "-c" | "--copy" => config.file_operation = Some(FileOperations::Copy),
             "-r" | "--rename" => config.file_operation = Some(FileOperations::Rename),
             "-d" | "--delete" => config.file_operation = Some(FileOperations::Delete),
-            "-f" | "--from" => {
+            "-f" | "--from" | "-F" | "--File" => {
                 if i + 1 < args.len() {
                     config.from = Some(args[i + 1].clone());
                     i += 1;
