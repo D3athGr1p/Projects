@@ -122,7 +122,7 @@ fn print_help() {
         "
 Usage: cargo run [OPTION]
     -h, --help      : print help message
-    -F, --file      : set the file to copy/move/rename/delete
+    -F, --file      : set the file for delete
     -m, --move      : move the file
     -c, --copy      : copy the file
     -r, --rename    : rename the file
