@@ -8,7 +8,6 @@ pub enum Operation {
     Read,
     Update,
     Delete,
-    Quit,
 }
 
 impl Operation {
@@ -18,7 +17,9 @@ impl Operation {
             "r" => Some(Operation::Read),
             "u" => Some(Operation::Update),
             "d" => Some(Operation::Delete),
-            "q" => Some(Operation::Quit),
+            "q" => {
+                process::exit(0);
+            }
             _ => None,
         };
         operation
@@ -51,7 +52,6 @@ impl RestClient {
             Operation::Read => self.ops(data, Operation::Read).await?,
             Operation::Update => self.ops(data, Operation::Update).await?,
             Operation::Delete => self.ops(data, Operation::Delete).await?,
-            Operation::Quit => self.quit().await?,
         };
 
         Ok(RestClient {
@@ -89,7 +89,6 @@ impl RestClient {
                 format!("{}/delete", self.base_url),
                 format!(r#"{{"key":"{}"}}"#, data.id),
             ),
-            Operation::Quit => unreachable!(),
         };
 
         self.send_request(url, json_data).await?;
@@ -113,9 +112,5 @@ impl RestClient {
         println!("Response body: \n{}", response_body);
 
         Ok(())
-    }
-
-    pub async fn quit(&self) -> Result<(), Box<dyn Error>> {
-        process::exit(0);
     }
 }
