@@ -1,7 +1,7 @@
 use ethers::{
     middleware::{
         gas_escalator::{Frequency, GasEscalatorMiddleware, GeometricGasPrice},
-        gas_oracle::{GasNow, GasOracleMiddleware},
+        gas_oracle::{GasCategory, GasNow, GasOracleMiddleware},
         MiddlewareBuilder, NonceManagerMiddleware, SignerMiddleware,
     },
     prelude::*,
@@ -28,9 +28,10 @@ impl EtherClient {
     pub fn set_client_with_privet_key(
         &mut self,
         wallet: LocalWallet,
+        chain_id: u64,
     ) -> Result<(), Box<dyn Error>> {
         let value: SignerMiddleware<Provider<Http>, LocalWallet> =
-            SignerMiddleware::new(self.provider.clone(), wallet);
+            SignerMiddleware::new(self.provider.clone(), wallet.with_chain_id(chain_id));
         self.client = Some(value);
 
         Ok(())
@@ -75,31 +76,17 @@ impl EtherClient {
 
         let client = self.client.clone().ok_or("Client not initialized")?;
         let user_account = client.address();
+        let nonce_manager = client.nonce_manager(user_account);
 
         let tx = TransactionRequest::new()
             .from(user_account)
             .to(to)
             .value(value);
 
-        println!("{tx:?}");
+        let pending_tx = nonce_manager.send_transaction(tx, None).await?.await?;
 
-        let nonce_manager = client.nonce_manager(user_account);
-
-        let pending_tx = nonce_manager
-            .send_transaction(tx, Some(BlockNumber::Pending.into()))
-            .await?;
-
-        match pending_tx.await {
-            Ok(Some(tx_receipt)) => {
-                println!("Transaction receipt: {:?}", tx_receipt);
-            }
-            Ok(None) => {
-                println!("Transaction was not included in a block yet.");
-            }
-            Err(err) => {
-                println!("Error waiting for transaction receipt: {:?}", err);
-                return Err(Box::new(err));
-            }
+        if pending_tx.is_some() {
+            println!("Pending tx: {pending_tx:#?}");
         }
 
         Ok(())
@@ -178,5 +165,14 @@ impl EtherClient {
         let transaction = self.provider.get_transaction(transaction_hash).await?;
 
         Ok(transaction)
+    }
+
+    pub async fn sign_message(
+        &self,
+        message: String,
+        wallet: LocalWallet,
+    ) -> Result<Signature, Box<dyn Error>> {
+        let signature = wallet.sign_message(message.as_bytes()).await?;
+        Ok(signature)
     }
 }

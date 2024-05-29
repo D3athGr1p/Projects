@@ -24,7 +24,7 @@ async fn main() -> Result<(), Box<dyn Error>> {
     loop {
         println!("Welcome to rs-ether server");
         println!("Press 1 for Anvil to connect");
-        println!("Press 2 for connet to the manual RPC");
+        println!("Press 2 for connect to the manual RPC");
 
         std::io::stdin()
             .read_line(&mut user_input)
@@ -54,21 +54,28 @@ async fn main() -> Result<(), Box<dyn Error>> {
     }
     let mut client = EtherClient::new(end_point).unwrap();
 
+    let chain_id = client.get_chain_id().await.unwrap();
+
     let wallet: LocalWallet = client.load_wallet(Some(&anvil), key).unwrap();
 
-    // let address = wallet.address();
-
-    // println!("{:?}", client.get_account_balance(address).await?);
-
-    client.set_client_with_privet_key(wallet)?;
+    client.set_client_with_privet_key(wallet, chain_id.as_u64())?;
 
     let to_adr: H160 = "0x000000000000000000000000000000000000dead"
         .parse()
         .unwrap();
 
-    let val = parse_ether(1u64).unwrap();
+    let value = parse_ether(1u64).unwrap();
 
-    let _ = client.create_and_send_tx(to_adr, val).await;
+    let value = client.create_and_send_tx(to_adr, value).await;
+
+    match value {
+        Ok(_) => {
+            println!("Success");
+        }
+        Err(err) => {
+            println!("Error: {:?}", err);
+        }
+    };
 
     Ok(())
 }
