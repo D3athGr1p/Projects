@@ -4,9 +4,6 @@ use ethers::{prelude::*, solc::Solc, utils::Anvil};
 use eyre::{ErrReport, Ok, Result};
 use std::fs;
 use std::sync::Arc;
-use std::time::Duration;
-
-use crate::client;
 
 const RPC: &str = "https://eth.llamarpc.com";
 

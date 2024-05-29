@@ -5,11 +5,10 @@ use ethers::{
         MiddlewareBuilder, NonceManagerMiddleware, SignerMiddleware,
     },
     prelude::*,
+    utils::AnvilInstance,
 };
 use gas_oracle::ProviderOracle;
-use std::{env, error::Error};
-
-const RPC: &str = "https://eth.llamarpc.com";
+use std::error::Error;
 
 pub struct EtherClient {
     provider: Provider<Http>,
@@ -17,8 +16,8 @@ pub struct EtherClient {
 }
 
 impl EtherClient {
-    pub fn new() -> Result<EtherClient, Box<dyn Error>> {
-        let provider: Provider<Http> = Provider::<Http>::try_from(RPC)?;
+    pub fn new(rpc: String) -> Result<EtherClient, Box<dyn Error>> {
+        let provider: Provider<Http> = Provider::<Http>::try_from(rpc)?;
 
         Ok(Self {
             provider,
@@ -26,12 +25,10 @@ impl EtherClient {
         })
     }
 
-    pub async fn set_client_with_privet_key(
+    pub fn set_client_with_privet_key(
         &mut self,
-        p_key: String,
+        wallet: LocalWallet,
     ) -> Result<(), Box<dyn Error>> {
-        let wallet: LocalWallet = p_key.parse::<LocalWallet>()?;
-
         let value: SignerMiddleware<Provider<Http>, LocalWallet> =
             SignerMiddleware::new(self.provider.clone(), wallet);
         self.client = Some(value);
@@ -39,19 +36,71 @@ impl EtherClient {
         Ok(())
     }
 
+    pub fn load_wallet(
+        &self,
+        instance: Option<&AnvilInstance>,
+        p_key: String,
+    ) -> Result<LocalWallet, Box<dyn Error>> {
+        if instance.is_none() && p_key.is_empty() {
+            return Err(Box::new(std::io::Error::new(
+                std::io::ErrorKind::Other,
+                "Privet key not found for provided instance",
+            )));
+        }
+        let wallet: LocalWallet = match instance {
+            Some(instance) => instance.keys()[0].clone().into(),
+            None => p_key.parse::<LocalWallet>()?,
+        };
+
+        Ok(wallet)
+    }
+
     pub async fn create_and_send_tx(&self, to: H160, value: U256) -> Result<(), Box<dyn Error>> {
-        let tx = TransactionRequest::new().to(to).value(value);
-        println!("TX RAW IS {tx:?}");
+        // let user_account = self.client.clone().unwrap().address();
 
-        let user_account = self.client.clone().unwrap().address();
+        // let tx = TransactionRequest::new()
+        //     .from(user_account)
+        //     .to(to)
+        //     .value(value);
 
-        let nonce_manager = self.client.clone().unwrap().nonce_manager(user_account);
+        // let nonce_manager = self.client.clone().unwrap().nonce_manager(user_account);
 
-        nonce_manager
+        // let tx_recipet = nonce_manager
+        //     .send_transaction(tx, Some(BlockNumber::Pending.into()))
+        //     .await?
+        //     .await?
+        //     .unwrap_or(TransactionReceipt::default());
+
+        // println!("tx_recipet {tx_recipet:?}");
+
+        let client = self.client.clone().ok_or("Client not initialized")?;
+        let user_account = client.address();
+
+        let tx = TransactionRequest::new()
+            .from(user_account)
+            .to(to)
+            .value(value);
+
+        println!("{tx:?}");
+
+        let nonce_manager = client.nonce_manager(user_account);
+
+        let pending_tx = nonce_manager
             .send_transaction(tx, Some(BlockNumber::Pending.into()))
-            .await?
-            .await?
-            .unwrap();
+            .await?;
+
+        match pending_tx.await {
+            Ok(Some(tx_receipt)) => {
+                println!("Transaction receipt: {:?}", tx_receipt);
+            }
+            Ok(None) => {
+                println!("Transaction was not included in a block yet.");
+            }
+            Err(err) => {
+                println!("Error waiting for transaction receipt: {:?}", err);
+                return Err(Box::new(err));
+            }
+        }
 
         Ok(())
     }
