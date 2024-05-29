@@ -1,7 +1,6 @@
 use ethers::{
     signers::LocalWallet,
-    types::H160,
-    utils::{parse_ether, Anvil, AnvilInstance},
+    utils::{Anvil, AnvilInstance},
 };
 
 mod client;
@@ -9,6 +8,7 @@ mod contract;
 mod utils;
 
 use client::EtherClient;
+use contract::Contracts;
 use dotenv::dotenv;
 use std::error::Error;
 
@@ -60,22 +60,34 @@ async fn main() -> Result<(), Box<dyn Error>> {
 
     client.set_client_with_privet_key(wallet, chain_id.as_u64())?;
 
-    let to_adr: H160 = "0x000000000000000000000000000000000000dead"
-        .parse()
-        .unwrap();
+    // let to_adr = "0x000000000000000000000000000000000000dead";
 
-    let value = parse_ether(1u64).unwrap();
+    // let value = 1u64;
 
-    let value = client.create_and_send_tx(to_adr, value).await;
+    // let raw_tx = client.create_raw_coin_tx(to_adr, value, "ether").unwrap();
 
-    match value {
-        Ok(_) => {
-            println!("Success");
-        }
-        Err(err) => {
-            println!("Error: {:?}", err);
-        }
-    };
+    // let result = client.send_raw_tx(raw_tx).await;
+
+    // match result {
+    //     Ok(_) => {
+    //         println!("Transaction executed successfully");
+    //     }
+    //     Err(err) => {
+    //         println!("Error: {:?}", err);
+    //     }
+    // };
+
+    // let provider = client.get_client().unwrap();
+
+    // let contract = Contracts::new(
+    //     provider,
+    //     "0xd38D26954C4a8087358b8D698fE5e3255C5Aecea",
+    //     "src/contract/IERC20.json",
+    // )
+    // .unwrap()
+    // .unwrap();
+
+    // contract.print_all_contract_events();
 
     Ok(())
 }

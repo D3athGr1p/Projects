@@ -1,11 +1,7 @@
 use ethers::{
-    middleware::{
-        gas_escalator::{Frequency, GasEscalatorMiddleware, GeometricGasPrice},
-        gas_oracle::{GasCategory, GasNow, GasOracleMiddleware},
-        MiddlewareBuilder, NonceManagerMiddleware, SignerMiddleware,
-    },
+    middleware::{MiddlewareBuilder, SignerMiddleware},
     prelude::*,
-    utils::AnvilInstance,
+    utils::{parse_units, AnvilInstance, ParseUnits},
 };
 use gas_oracle::ProviderOracle;
 use std::error::Error;
@@ -13,6 +9,7 @@ use std::error::Error;
 pub struct EtherClient {
     provider: Provider<Http>,
     client: Option<SignerMiddleware<Provider<Http>, LocalWallet>>,
+    address: Option<H160>,
 }
 
 impl EtherClient {
@@ -22,6 +19,7 @@ impl EtherClient {
         Ok(Self {
             provider,
             client: None,
+            address: None,
         })
     }
 
@@ -30,9 +28,19 @@ impl EtherClient {
         wallet: LocalWallet,
         chain_id: u64,
     ) -> Result<(), Box<dyn Error>> {
-        let value: SignerMiddleware<Provider<Http>, LocalWallet> =
-            SignerMiddleware::new(self.provider.clone(), wallet.with_chain_id(chain_id));
-        self.client = Some(value);
+        let value: Option<SignerMiddleware<Provider<Http>, LocalWallet>> = Some(
+            SignerMiddleware::new(self.provider.clone(), wallet.with_chain_id(chain_id)),
+        );
+
+        (self.client, self.address) = match value {
+            Some(value) => (Some(value.clone()), Some(value.address())),
+            None => {
+                return Err(Box::new(std::io::Error::new(
+                    std::io::ErrorKind::Other,
+                    "Intialization failed",
+                )))
+            }
+        };
 
         Ok(())
     }
@@ -56,37 +64,51 @@ impl EtherClient {
         Ok(wallet)
     }
 
-    pub async fn create_and_send_tx(&self, to: H160, value: U256) -> Result<(), Box<dyn Error>> {
-        // let user_account = self.client.clone().unwrap().address();
+    pub fn create_raw_coin_tx(
+        &self,
+        to: &str,
+        value: u64,
+        to_unit: &str,
+    ) -> Result<TransactionRequest, Box<dyn Error>> {
+        let user_account = self.address.unwrap();
 
-        // let tx = TransactionRequest::new()
-        //     .from(user_account)
-        //     .to(to)
-        //     .value(value);
+        let value: ParseUnits = match to_unit {
+            "wei" => parse_units(value, "wei").unwrap(),
+            "kwei" => parse_units(value, "kwei").unwrap(),
+            "mwei" => parse_units(value, "mwei").unwrap(),
+            "gwei" => parse_units(value, "gwei").unwrap(),
+            "szabo" => parse_units(value, "szabo").unwrap(),
+            "finney" => parse_units(value, "finney").unwrap(),
+            "ether" => parse_units(value, "ether").unwrap(),
+            _ => value.into(),
+        };
 
-        // let nonce_manager = self.client.clone().unwrap().nonce_manager(user_account);
+        let value = U256::from(value);
 
-        // let tx_recipet = nonce_manager
-        //     .send_transaction(tx, Some(BlockNumber::Pending.into()))
-        //     .await?
-        //     .await?
-        //     .unwrap_or(TransactionReceipt::default());
-
-        // println!("tx_recipet {tx_recipet:?}");
-
-        let client = self.client.clone().ok_or("Client not initialized")?;
-        let user_account = client.address();
-        let nonce_manager = client.nonce_manager(user_account);
-
+        let to: H160 = to.parse().unwrap();
         let tx = TransactionRequest::new()
             .from(user_account)
             .to(to)
             .value(value);
 
+        Ok(tx)
+    }
+
+    pub fn get_client(&self) -> Option<SignerMiddleware<Provider<Http>, LocalWallet>> {
+        self.client.clone()
+    }
+
+    pub async fn send_raw_tx(&self, tx: TransactionRequest) -> Result<(), Box<dyn Error>> {
+        let user_account = self.address.unwrap();
+        let nonce_manager = self.client.clone().unwrap().nonce_manager(user_account);
+
         let pending_tx = nonce_manager.send_transaction(tx, None).await?.await?;
 
         if pending_tx.is_some() {
-            println!("Pending tx: {pending_tx:#?}");
+            println!(
+                "Pending tx: {}",
+                serde_json::to_string_pretty(&pending_tx.unwrap())?
+            );
         }
 
         Ok(())
@@ -117,22 +139,6 @@ impl EtherClient {
 
     pub async fn get_account_balance(&self, from: Address) -> Result<U256, Box<dyn Error>> {
         Ok(self.provider.get_balance(from, None).await?)
-    }
-
-    pub async fn send_coin(
-        &self,
-        from: Address,
-        to: Address,
-        value: U256,
-    ) -> Result<Bytes, Box<dyn Error>> {
-        let tx = TransactionRequest::default()
-            .from(from)
-            .to(to)
-            .value(value)
-            .into();
-        let result = self.provider.call_raw(&tx).await?;
-
-        Ok(result)
     }
 
     pub async fn get_gas_price_oracle(&self) -> Result<U256, Box<dyn Error>> {
