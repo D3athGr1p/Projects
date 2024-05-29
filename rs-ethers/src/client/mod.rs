@@ -1,4 +1,3 @@
-use crate::client::k256::Secp256k1;
 use ethers::{
     middleware::{
         gas_escalator::{Frequency, GasEscalatorMiddleware, GeometricGasPrice},
@@ -27,28 +26,33 @@ impl EtherClient {
         })
     }
 
-    pub async fn set_client(&mut self, p_key: String) -> Result<(), Box<dyn Error>> {
+    pub async fn set_client_with_privet_key(
+        &mut self,
+        p_key: String,
+    ) -> Result<(), Box<dyn Error>> {
         let wallet: LocalWallet = p_key.parse::<LocalWallet>()?;
-        let address = wallet.address();
-        let gas_oracle = GasNow::new();
 
-        // let check: NonceManagerMiddleware<
-        //     SignerMiddleware<GasOracleMiddleware<Provider<Http>, GasNow>, LocalWallet
-        // > = Provider::<Http>::try_from(RPC)
-        //     .unwrap()
-        //     .gas_oracle(gas_oracle)
-        //     .with_signer(wallet.clone())
-        //     .nonce_manager(address);
-
-        let value = SignerMiddleware::new(self.provider.clone(), wallet);
+        let value: SignerMiddleware<Provider<Http>, LocalWallet> =
+            SignerMiddleware::new(self.provider.clone(), wallet);
         self.client = Some(value);
 
         Ok(())
     }
 
-    pub fn create_tx(&self, to: H160, value: U256) -> Result<(), Box<dyn Error>> {
+    pub async fn create_and_send_tx(&self, to: H160, value: U256) -> Result<(), Box<dyn Error>> {
         let tx = TransactionRequest::new().to(to).value(value);
         println!("TX RAW IS {tx:?}");
+
+        let user_account = self.client.clone().unwrap().address();
+
+        let nonce_manager = self.client.clone().unwrap().nonce_manager(user_account);
+
+        nonce_manager
+            .send_transaction(tx, Some(BlockNumber::Pending.into()))
+            .await?
+            .await?
+            .unwrap();
+
         Ok(())
     }
 
@@ -100,5 +104,30 @@ impl EtherClient {
 
         let price: U256 = oracle.fetch().await?;
         Ok(price)
+    }
+
+    pub async fn get_code(&self, at: Address) -> Result<Bytes, Box<dyn Error>> {
+        Ok(self.provider.get_code(at, None).await?)
+    }
+
+    pub async fn is_contract_exists(&self, at: Address) -> Result<bool, Box<dyn Error>> {
+        let code = self.get_code(at).await?;
+
+        Ok(code.len() > 0)
+    }
+
+    pub async fn get_slot_data(&self, at: Address, slot: TxHash) -> Result<H256, Box<dyn Error>> {
+        let slot_data = self.provider.get_storage_at(at, slot, None).await?;
+
+        Ok(slot_data)
+    }
+
+    pub async fn get_transaction_data(
+        &self,
+        transaction_hash: TxHash,
+    ) -> Result<Option<Transaction>, Box<dyn Error>> {
+        let transaction = self.provider.get_transaction(transaction_hash).await?;
+
+        Ok(transaction)
     }
 }

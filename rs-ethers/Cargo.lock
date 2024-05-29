@@ -881,6 +881,7 @@ checksum = "e79e5973c26d4baf0ce55520bd732314328cabe53193286671b47144145b9649"
 dependencies = [
  "chrono",
  "ethers-core",
+ "ethers-solc",
  "reqwest",
  "semver",
  "serde",
@@ -2344,6 +2345,8 @@ version = "0.1.0"
 dependencies = [
  "dotenv",
  "ethers",
+ "eyre",
+ "serde_json",
  "tokio",
 ]
 

@@ -1,6 +1,7 @@
 use ethers::{types::H160, utils::parse_ether};
 
 mod client;
+mod contract;
 
 use client::EtherClient;
 use dotenv::dotenv;
@@ -20,5 +21,5 @@ async fn main() {
     let val = parse_ether(1u64).unwrap();
 
     // let _ = test.get_block(10).await;
-    let _ = test.create_tx(to_adr, val).unwrap();
+    let _ = test.create_and_send_tx(to_adr, val).await;
 }
