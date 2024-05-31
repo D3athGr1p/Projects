@@ -2,20 +2,20 @@
 
 - [ ] Ownership and Borrowing
   - [ ] Ownership
-    - [ ] Ownership rules
+    - [X] Ownership rules
     - [ ] Move semantics
-  - [ ] Borrowing (immutable and mutable)
-  - [ ] References
-    - [ ] Immutable references
-    - [ ] Mutable references
+  - [X] Borrowing (immutable and mutable)
+  - [X] References
+    - [X] Immutable references
+    - [X] Mutable references
   - [ ] Lifetimes
-    - [ ] Lifetime annotations
+    -X[ ] Lifetime annotations
     - [ ] Lifetime elision
     - [ ] Static lifetime
     - [ ] Lifetime bounds
 - [ ] Traits
-  - [ ] Defining traits
-  - [ ] Implementing traits for types
+  - [X] Defining traits
+  - [X] Implementing traits for types
   - [ ] Default method implementations
   - [ ] Derivable traits
     - [ ] Common derivable traits (e.g., Clone, Copy, Debug)
