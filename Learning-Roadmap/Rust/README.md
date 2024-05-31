@@ -1,0 +1,95 @@
+# Rust Learning Roadmap
+
+- [ ] Ownership and Borrowing
+  - [ ] Ownership
+    - [ ] Ownership rules
+    - [ ] Move semantics
+  - [ ] Borrowing (immutable and mutable)
+  - [ ] References
+    - [ ] Immutable references
+    - [ ] Mutable references
+  - [ ] Lifetimes
+    - [ ] Lifetime annotations
+    - [ ] Lifetime elision
+    - [ ] Static lifetime
+    - [ ] Lifetime bounds
+- [ ] Traits
+  - [ ] Defining traits
+  - [ ] Implementing traits for types
+  - [ ] Default method implementations
+  - [ ] Derivable traits
+    - [ ] Common derivable traits (e.g., Clone, Copy, Debug)
+  - [ ] Trait bounds
+  - [ ] Associated types
+  - [ ] Generic traits
+- [ ] Concurrency
+  - [ ] Threads
+    - [ ] Creating and managing threads
+  - [ ] Mutex and RwLock
+  - [ ] Channels
+    - [ ] Synchronous channels
+    - [ ] Asynchronous channels
+  - [ ] Asynchronous programming
+    - [ ] async/await syntax
+    - [ ] Futures
+    - [ ] Tasks and executors
+- [ ] Memory Management
+  - [ ] Smart pointers
+    - [ ] Box
+    - [ ] Rc (Reference Counted)
+    - [ ] Arc (Atomic Reference Counted)
+  - [ ] Interior mutability
+    - [ ] RefCell
+    - [ ] Cell
+  - [ ] Drop trait
+  - [ ] Copy trait
+  - [ ] Deref and DerefMut traits
+- [ ] Error Handling
+  - [ ] Result and Option types
+  - [ ] Error trait
+  - [ ] Panic handling
+  - [ ] ? operator
+- [ ] Modules and Crates
+  - [ ] Creating and using modules
+  - [ ] Crate structure
+  - [ ] Packages and workspaces
+  - [ ] External crates and Cargo
+- [ ] Macros
+  - [ ] Declarative macros (macro_rules!)
+  - [ ] Procedural macros
+    - [ ] Custom derive macros
+    - [ ] Attribute-like macros
+    - [ ] Function-like macros
+- [ ] Unsafe Rust
+  - [ ] Raw pointers
+  - [ ] Unsafe functions and blocks
+  - [ ] FFI (Foreign Function Interface)
+  - [ ] Unsafe traits and implementations
+- [ ] Standard Library
+  - [ ] Collections
+    - [ ] Vec and VecDeque
+    - [ ] HashMap and BTreeMap
+    - [ ] HashSet and BTreeSet
+  - [ ] Strings and &str
+  - [ ] Iterators and Itertools
+  - [ ] Slices
+- [ ] Multithreading
+  - [ ] Sync and Send traits
+  - [ ] Thread safety
+- [ ] Tokio
+  - [ ] Async runtime
+  - [ ] Tasks and Spawning
+  - [ ] Async IO
+  - [ ] Timers
+  - [ ] Tokio channels
+- [ ] Rocket
+  - [ ] Setting up a Rocket application
+  - [ ] Routing
+  - [ ] Request handling
+  - [ ] Response handling
+  - [ ] Middleware
+- [ ] Dioxus
+  - [ ] Setting up a Dioxus project
+  - [ ] Components
+  - [ ] State management
+  - [ ] Events and props
