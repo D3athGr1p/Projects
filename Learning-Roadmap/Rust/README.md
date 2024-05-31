@@ -1,6 +1,6 @@
 # Rust Learning Roadmap
 
-- [ ] Ownership and Borrowing
+- [X] Ownership and Borrowing
   - [X] Ownership
     - [X] Ownership rules
     - [X] Move semantics
@@ -8,11 +8,11 @@
   - [X] References
     - [X] Immutable references
     - [X] Mutable references
-  - [ ] Lifetimes
-    - [ ] Lifetime annotations
-    - [ ] Lifetime elision
-    - [ ] Static lifetime
-    - [ ] Lifetime bounds
+  - [X] Lifetimes
+    - [X] Lifetime annotations
+    - [X] Lifetime elision
+    - [X] Static lifetime
+    - [X] Lifetime bounds
 - [ ] Traits
   - [X] Defining traits
   - [X] Implementing traits for types
