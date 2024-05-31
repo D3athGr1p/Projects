@@ -16,12 +16,12 @@
 - [ ] Traits
   - [X] Defining traits
   - [X] Implementing traits for types
-  - [ ] Default method implementations
-  - [ ] Derivable traits
-    - [ ] Common derivable traits (e.g., Clone, Copy, Debug)
-  - [ ] Trait bounds
+  - [X] Default method implementations
+  - [X] Derivable traits
+    - [X] Common derivable traits (e.g., Clone, Copy, Debug)
+  - [X] Trait bounds
   - [ ] Associated types
-  - [ ] Generic traits
+  - [X] Generic traits
 - [ ] Concurrency
   - [ ] Threads
     - [ ] Creating and managing threads
@@ -41,8 +41,8 @@
   - [ ] Interior mutability
     - [ ] RefCell
     - [ ] Cell
-  - [ ] Drop trait
-  - [ ] Copy trait
+  - [X] Drop trait
+  - [X] Copy trait
   - [ ] Deref and DerefMut traits
 - [ ] Error Handling
   - [ ] Result and Option types
