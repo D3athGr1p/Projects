@@ -1,20 +1,21 @@
 ### Basics
 
-- [ ] Introduction to Blockchain Technology
-- [ ] History of Blockchain
-- [ ] Distributed Ledger Technology (DLT)
-- [ ] Cryptography Basics
-- [ ] Consensus Mechanisms
-- [ ] Smart Contracts
-- [ ] Use Cases of Blockchain
+- [X] Introduction to Blockchain Technology
+- [X] History of Blockchain
+- [X] Distributed Ledger Technology (DLT)
+- [X] Cryptography Basics
+- [X] Consensus Mechanisms
+- [X] Smart Contracts
+- [X] Use Cases of Blockchain
 
 ### Blockchain Platforms
 
-- [ ] Ethereum
-  - [ ] Ethereum Virtual Machine (EVM)
-  - [ ] Solidity Programming Language
-  - [ ] Truffle Framework
-  - [ ] Web3.js
+- [X] Ethereum
+  - [X] Ethereum Virtual Machine (EVM)
+  - [X] Solidity Programming Language
+  - [X] Truffle Framework
+  - [X] Foundry Framework
+  - [X] Web3.js
 - [ ] Hyperledger Fabric
   - [ ] Hyperledger Fabric Architecture
   - [ ] Chaincode (Smart Contracts)
@@ -31,75 +32,75 @@
 
 ### Smart Contract Development
 
-- [ ] Solidity Programming Language
-  - [ ] Variables and Data Types
-  - [ ] Functions and Control Structures
-  - [ ] Events and Logging
-  - [ ] Solidity Modifiers
-- [ ] Writing and Deploying Smart Contracts
-- [ ] Contract Interactions
-- [ ] Testing Smart Contracts
-- [ ] Security Considerations
-- [ ] Debugging Smart Contracts
-- [ ] Best Practices for Smart Contract Development
+- [X] Solidity Programming Language
+  - [X] Variables and Data Types
+  - [X] Functions and Control Structures
+  - [X] Events and Logging
+  - [X] Solidity Modifiers
+- [X] Writing and Deploying Smart Contracts
+- [X] Contract Interactions
+- [X] Testing Smart Contracts
+- [X] Security Considerations
+- [X] Debugging Smart Contracts
+- [X] Best Practices for Smart Contract Development
 
 ### DApp Development
 
-- [ ] Decentralized Application (DApp) Architecture
+- [X] Decentralized Application (DApp) Architecture
 - [ ] Frontend Development with HTML/CSS/JavaScript
-- [ ] Integrating Web3.js with DApps
-- [ ] MetaMask Integration
+- [X] Integrating Web3.js with DApps
+- [X] MetaMask Integration
 - [ ] Wallet Development
 - [ ] Ethereum Name Service (ENS)
-- [ ] IPFS Integration
+- [X] IPFS Integration
 
 ### Token Standards
 
-- [ ] ERC-20 Token Standard
-- [ ] ERC-721 Token Standard (NFTs)
-- [ ] ERC-1155 Token Standard
+- [X] ERC-20 Token Standard
+- [X] ERC-721 Token Standard (NFTs)
+- [X] ERC-1155 Token Standard
 - [ ] Creating Custom Token Standards
 
 ### Consensus Mechanisms
 
-- [ ] Proof of Work (PoW)
-- [ ] Proof of Stake (PoS)
+- [X] Proof of Work (PoW)
+- [X] Proof of Stake (PoS)
 - [ ] Delegated Proof of Stake (DPoS)
 - [ ] Practical Byzantine Fault Tolerance (PBFT)
 - [ ] Federated Byzantine Agreement (FBA)
 
 ### Security and Privacy
 
-- [ ] Cryptography in Blockchain
-- [ ] Digital Signatures
-- [ ] Hash Functions
-- [ ] Public and Private Key Management
-- [ ] Security Best Practices
-- [ ] Secure Smart Contract Development
+- [X] Cryptography in Blockchain
+- [X] Digital Signatures
+- [X] Hash Functions
+- [X] Public and Private Key Management
+- [X] Security Best Practices
+- [X] Secure Smart Contract Development
 - [ ] Privacy Enhancements (zk-SNARKs, zk-STARKs)
 
 ### Decentralized Finance (DeFi)
 
-- [ ] Overview of DeFi
-- [ ] Decentralized Exchanges (DEX)
-- [ ] Decentralized Finance Protocols
-- [ ] Automated Market Makers (AMMs)
+- [X] Overview of DeFi
+- [X] Decentralized Exchanges (DEX)
+- [X] Decentralized Finance Protocols
+- [X] Automated Market Makers (AMMs)
 - [ ] Yield Farming and Liquidity Mining
 - [ ] Flash Loans
 - [ ] Stablecoins
 
 ### Governance and DAOs
 
-- [ ] Governance in Blockchain Networks
-- [ ] Decentralized Autonomous Organizations (DAOs)
-- [ ] DAO Governance Models
-- [ ] Voting Mechanisms
+- [X] Governance in Blockchain Networks
+- [X] Decentralized Autonomous Organizations (DAOs)
+- [X] DAO Governance Models
+- [X] Voting Mechanisms
 - [ ] Token Curated Registries (TCRs)
 
 ### Oracles and Interoperability
 
-- [ ] Oracles in Blockchain
-- [ ] Chainlink Oracles
+- [X] Oracles in Blockchain
+- [X] Chainlink Oracles
 - [ ] Interoperability Protocols (Polkadot, Cosmos)
 - [ ] Cross-Chain Communication
 - [ ] Wrapped Tokens
@@ -114,20 +115,20 @@
 
 ### Blockchain Development Tools
 
-- [ ] Truffle Suite
-- [ ] Remix IDE
-- [ ] Ganache
+- [X] Truffle Suite
+- [X] Remix IDE
+- [X] Ganache
 - [ ] Hardhat
-- [ ] Infura
-- [ ] Etherscan
-- [ ] Foundry
+- [X] Infura
+- [X] Etherscan
+- [X] Foundry
 
 ### Deployment and Operations
 
-- [ ] Deploying Smart Contracts to Mainnet
-- [ ] Setting Up and Managing Nodes
-- [ ] Monitoring Blockchain Networks
-- [ ] Upgrading Smart Contracts
+- [X] Deploying Smart Contracts to Mainnet
+- [X] Setting Up and Managing Nodes
+- [X] Monitoring Blockchain Networks
+- [X] Upgrading Smart Contracts
 - [ ] Continuous Integration/Continuous Deployment (CI/CD)
 
 ### Legal and Regulatory Considerations
