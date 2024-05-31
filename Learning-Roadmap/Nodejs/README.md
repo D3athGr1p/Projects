@@ -1,13 +1,13 @@
 ### Basics
 
-- [ ] Introduction to Node.js
-- [ ] Setting Up Node.js Environment
-- [ ] Node.js Runtime Environment
+- [x] Introduction to Node.js
+- [x] Setting Up Node.js Environment
+- [x] Node.js Runtime Environment
 - [ ] Node.js REPL (Read-Eval-Print Loop)
 
 ### Core Modules
 
-- [ ] fs (File System)
+- [x] fs (File System)
 - [ ] http (HTTP Server and Client)
 - [ ] https (HTTPS Server and Client)
 - [ ] os (Operating System)
@@ -19,15 +19,15 @@
 - [ ] querystring (Query String)
 - [ ] crypto (Cryptography)
 - [ ] child_process (Child Processes)
-- [ ] assert (Assertion Testing)
-- [ ] process (Process Object)
+- [x] assert (Assertion Testing)
+- [x] process (Process Object)
 - [ ] timers (Timers)
 
 ### NPM (Node Package Manager)
 
-- [ ] Installing Packages
-- [ ] Managing Dependencies
-- [ ] Package.json File
+- [x] Installing Packages
+- [x] Managing Dependencies
+- [x] Package.json File
 - [ ] Semantic Versioning (SemVer)
 - [ ] Publishing Packages
 - [ ] Creating NPM Scripts
@@ -35,7 +35,7 @@
 ### Asynchronous Programming
 
 - [ ] Callbacks
-- [ ] Promises
+- [x] Promises
 - [ ] Async/Await
 - [ ] Error Handling
 - [ ] Event Emitters
