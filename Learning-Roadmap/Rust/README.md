@@ -45,7 +45,7 @@
   - [X] Copy trait
   - [ ] Deref and DerefMut traits
 - [ ] Error Handling
-  - [ ] Result and Option types
+  - [X] Result and Option types
   - [ ] Error trait
   - [ ] Panic handling
   - [ ] ? operator
