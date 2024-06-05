@@ -48,6 +48,8 @@
 - [ ] **Stability Fee**: Interest paid on DAI loans.
 - [ ] **MKR Token**: Governance token for protocol decisions.
 - [ ] **Governance**: MKR holders can vote on protocol changes.
+- [ ] **DAI Stablecoin**: Issued against collateralized debt positions.
+- [ ] **Staking**: Users can stake MKR tokens for governance.
 
 ---
 
@@ -61,6 +63,8 @@
 - [ ] **Collateral**: Users must lock SNX tokens to mint Synths.
 - [ ] **SNX Token**: Governance token for protocol decisions.
 - [ ] **Governance**: SNX holders can vote on protocol changes.
+- [ ] **Synthetic Assets**: Represent real-world assets on the blockchain.
+- [ ] **Staking**: Users can stake SNX tokens to mint synths.
 
 ---
 
@@ -138,6 +142,7 @@
 - [ ] **CHI Token**: Used to pay for gas fees.
 - [ ] **1INCH Token**: Governance token for protocol decisions.
 - [ ] **Governance**: 1INCH holders can vote on protocol changes.
+- [ ] **Limit Orders**: Users can set custom trading parameters.
 
 ---
 
@@ -262,6 +267,7 @@
 - [ ] **Options Contracts**: Users can buy and sell options.
 - [ ] **HEGIC Token**: Governance token for protocol decisions.
 - [ ] **Governance**: HEGIC holders can vote on protocol changes.
+- [ ] **Liquidity Pools**: Provide liquidity to options.
 
 ---
 
@@ -287,8 +293,7 @@
 - [ ] **KyberSwap**: A decentralized exchange platform for token swaps.
 - [ ] **KNC Token**: Governance token for protocol decisions.
 - [ ] **Governance**: KNC holders can vote on protocol changes
-
-.
+- [ ] **Liquidity Pools**: Provide liquidity and earn fees.
 
 ---
 
@@ -560,6 +565,7 @@
 - [ ] **Delphi**: Yield farming and strategy automation.
 - [ ] **AKRO Token**: Governance token for protocol decisions.
 - [ ] **Governance**: AKRO holders can vote on protocol changes.
+- [ ] **AkropolisOS**: Framework for creating decentralized finance applications.
 
 ---
 
@@ -601,59 +607,7 @@
 
 ---
 
-#### 49. **Hegic**
-
-**Concept**: Hegic is a decentralized options trading platform on Ethereum.
-
-**Mechanisms**:
-
-- [ ] **Options Contracts**: Users can create, buy, and sell options.
-- [ ] **Liquidity Pools**: Provide liquidity to options.
-- [ ] **HEGIC Token**: Governance token for protocol decisions.
-
-- [ ] **Governance**: HEGIC holders can vote on protocol changes.
-
----
-
-#### 50. **BarnBridge**
-
-**Concept**: BarnBridge is a decentralized finance (DeFi) protocol for tokenized risk.
-
-**Mechanisms**:
-
-- [ ] **SMART Yield**: Tokenized fixed income.
-- [ ] **SMART Alpha**: Tokenized risk tranches.
-- [ ] **BOND Token**: Governance token for protocol decisions.
-- [ ] **Governance**: BOND holders can vote on protocol changes.
-
----
-
-#### 51. **Dopex**
-
-**Concept**: Dopex is a decentralized options protocol that provides liquidity and minimizes losses for liquidity providers.
-
-**Mechanisms**:
-
-- [ ] **Options Contracts**: Users can create, buy, and sell options.
-- [ ] **Staking**: Users can stake tokens to earn rewards.
-- [ ] **DPX Token**: Governance token for protocol decisions.
-- [ ] **Governance**: DPX holders can vote on protocol changes.
-
----
-
-#### 52. **KeeperDAO**
-
-**Concept**: KeeperDAO is a decentralized protocol for pooled liquidity and automated trading.
-
-**Mechanisms**:
-
-- [ ] **Keepers**: Autonomous agents that execute arbitrage trades.
-- [ ] **ROOK Token**: Governance token for protocol decisions.
-- [ ] **Governance**: ROOK holders can vote on protocol changes.
-
----
-
-#### 53. **Nash**
+#### 49. **Nash**
 
 **Concept**: Nash is a decentralized exchange and financial services platform focused on security and user experience.
 
@@ -666,33 +620,7 @@
 
 ---
 
-#### 54. **Balancer**
-
-**Concept**: Balancer is a decentralized exchange and automated portfolio manager.
-
-**Mechanisms**:
-
-- [ ] **Liquidity Pools**: Users can create and manage pools of tokens.
-- [ ] **Balancer Pools**: Automatically rebalance portfolios.
-- [ ] **BAL Token**: Governance token for protocol decisions.
-- [ ] **Governance**: BAL holders can vote on protocol changes.
-
----
-
-#### 55. **Kyber Network**
-
-**Concept**: Kyber Network is a decentralized liquidity protocol that allows for seamless token swaps.
-
-**Mechanisms**:
-
-- [ ] **KyberSwap**: Interface for token swaps.
-- [ ] **Liquidity Pools**: Provide liquidity and earn fees.
-- [ ] **KNC Token**: Governance token for protocol decisions.
-- [ ] **Governance**: KNC holders can vote on protocol changes.
-
----
-
-#### 56. **Shapeshift**
+#### 50. **Shapeshift**
 
 **Concept**: Shapeshift is a decentralized exchange and portfolio management platform.
 
@@ -705,7 +633,7 @@
 
 ---
 
-#### 57. **DeversiFi**
+#### 51. **DeversiFi**
 
 **Concept**: DeversiFi is a decentralized exchange with a focus on privacy and high-speed trading.
 
@@ -718,7 +646,7 @@
 
 ---
 
-#### 58. **dYdX**
+#### 52. **dYdX**
 
 **Concept**: dYdX is a decentralized exchange for margin trading, lending, and borrowing.
 
@@ -731,7 +659,7 @@
 
 ---
 
-#### 59. **Loopring**
+#### 53. **Loopring**
 
 **Concept**: Loopring is a decentralized exchange protocol that leverages zk-rollups for high-throughput trading.
 
@@ -744,46 +672,7 @@
 
 ---
 
-#### 60. **SushiSwap**
-
-**Concept**: SushiSwap is a decentralized exchange and automated market maker (AMM) with community governance.
-
-**Mechanisms**:
-
-- [ ] **AMM**: Uses automated market maker model.
-- [ ] **Liquidity Pools**: Users provide liquidity and earn fees.
-- [ ] **SUSHI Token**: Governance token for protocol decisions.
-- [ ] **Governance**: SUSHI holders can vote on protocol changes.
-
----
-
-#### 61. **Synthetix**
-
-**Concept**: Synthetix is a decentralized protocol for creating synthetic assets.
-
-**Mechanisms**:
-
-- [ ] **Synthetic Assets**: Represent real-world assets on the blockchain.
-- [ ] **Staking**: Users can stake SNX tokens to mint synths.
-- [ ] **SNX Token**: Governance token for protocol decisions.
-- [ ] **Governance**: SNX holders can vote on protocol changes.
-
----
-
-#### 62. **PancakeSwap**
-
-**Concept**: PancakeSwap is a decentralized exchange on Binance Smart Chain (BSC) using an automated market maker (AMM) model.
-
-**Mechanisms**:
-
-- [ ] **AMM**: Uses automated market maker model.
-- [ ] **Liquidity Pools**: Users provide liquidity and earn fees.
-- [ ] **CAKE Token**: Governance token for protocol decisions.
-- [ ] **Governance**: CAKE holders can vote on protocol changes.
-
----
-
-#### 63. **BakerySwap**
+#### 54. **BakerySwap**
 
 **Concept**: BakerySwap is a decentralized exchange and NFT marketplace on Binance Smart Chain (BSC).
 
@@ -796,85 +685,7 @@
 
 ---
 
-#### 64. **1inch**
-
-**Concept**: 1inch is a decentralized exchange aggregator that sources liquidity from various DEXs to find the best trading rates.
-
-**Mechanisms**:
-
-- [ ] **DEX Aggregation**: Sources liquidity from multiple DEXs.
-- [ ] **Limit Orders**: Users can set custom trading parameters.
-- [ ] **1INCH Token**: Governance token for protocol decisions.
-- [ ] **Governance**: 1INCH holders can vote on protocol changes.
-
----
-
-#### 65. **Uniswap**
-
-**Concept**: Uniswap is a decentralized exchange using an automated market maker (AMM) model.
-
-**Mechanisms**:
-
-- [ ] **AMM**: Uses automated market maker model.
-- [ ] **Liquidity Pools**: Users provide liquidity and earn fees.
-- [ ] **UNI Token**: Governance token for protocol decisions.
-- [ ] **Governance**: UNI holders can vote on protocol changes.
-
----
-
-#### 66. **Curve Finance**
-
-**Concept**: Curve Finance is a decentralized exchange optimized for stablecoin trading with low slippage.
-
-**Mechanisms**:
-
-- [ ] **Stablecoin Trading**: Optimized for low slippage.
-- [ ] **Liquidity Pools**: Users provide liquidity and earn fees.
-- [ ] **CRV Token**: Governance token for protocol decisions.
-- [ ] **Governance**: CRV holders can vote on protocol changes.
-
----
-
-#### 67. **Compound**
-
-**Concept**: Compound is a decentralized lending protocol that allows users to earn interest on their crypto assets.
-
-**Mechanisms**:
-
-- [ ] **Lending and Borrowing**: Earn interest or borrow assets.
-- [ ] **cTokens**: Represent deposits and accrue interest.
-- [ ] **COMP Token**: Governance token for protocol decisions.
-- [ ] **Governance**: COMP holders can vote on protocol changes.
-
----
-
-#### 68. **Aave**
-
-**Concept**: Aave is a decentralized lending protocol that allows users to earn interest on deposits and borrow assets.
-
-**Mechanisms**:
-
-- [ ] **Lending and Borrowing**: Earn interest or borrow assets.
-- [ ] **aTokens**: Represent deposits and accrue interest.
-- [ ] **AAVE Token**: Governance token for protocol decisions.
-- [ ] **Governance**: AAVE holders can vote on protocol changes.
-
----
-
-#### 69. **MakerDAO**
-
-**Concept**: MakerDAO is a decentralized lending platform that issues the DAI stablecoin.
-
-**Mechanisms**:
-
-- [ ] **DAI Stablecoin**: Issued against collateralized debt positions.
-- [ ] **Staking**: Users can stake MKR tokens for governance.
-- [ ] **MKR Token**: Governance token for protocol decisions.
-- [ ] **Governance**: MKR holders can vote on protocol changes.
-
----
-
-#### 70. **Celo**
+#### 55. **Celo**
 
 **Concept**: Celo is a decentralized platform that aims to make financial tools accessible to anyone with a mobile phone.
 
@@ -887,7 +698,7 @@
 
 ---
 
-#### 71. **Nexo**
+#### 56. **Nexo**
 
 **Concept**: Nexo is a decentralized platform that offers instant crypto credit lines and high-yield interest accounts.
 
@@ -900,33 +711,7 @@
 
 ---
 
-#### 72. **Yearn Finance**
-
-**Concept**: Yearn Finance is a decentralized yield aggregator that optimizes yield farming strategies.
-
-**Mechanisms**:
-
-- [ ] **Vaults**: Automated yield farming strategies.
-- [ ] **Staking**: Users can stake tokens to earn rewards.
-- [ ] **YFI Token**: Governance token for protocol decisions.
-- [ ] **Governance**: YFI holders can vote on protocol changes.
-
----
-
-#### 73. **Alpha Homora**
-
-**Concept**: Alpha Homora is a decentralized protocol for leveraged yield farming.
-
-**Mechanisms**:
-
-- [ ] **Leveraged Yield Farming**: Users can borrow assets to increase yield.
-- [ ] **Staking**: Users can stake tokens to earn rewards.
-- [ ] **ALPHA Token**: Governance token for protocol decisions.
-- [ ] **Governance**: ALPHA holders can vote on protocol changes.
-
----
-
-#### 74. **BadgerDAO**
+#### 57. **BadgerDAO**
 
 **Concept**: BadgerDAO is a decentralized protocol focused on bringing Bitcoin to DeFi.
 
@@ -939,20 +724,7 @@
 
 ---
 
-#### 75. **Harvest Finance**
-
-**Concept**: Harvest Finance is a decentralized yield aggregator that automates yield farming strategies.
-
-**Mechanisms**:
-
-- [ ] **Farms**: Automated yield farming strategies.
-- [ ] **Staking**: Users can stake tokens to earn rewards.
-- [ ] **FARM Token**: Governance token for protocol decisions.
-- [ ] **Governance**: FARM holders can vote on protocol changes.
-
----
-
-#### 76. **Cream Finance**
+#### 58. **Cream Finance**
 
 **Concept**: Cream Finance is a decentralized lending and borrowing protocol.
 
@@ -965,20 +737,7 @@
 
 ---
 
-#### 77. **Akropolis**
-
-**Concept**: Akropolis is a decentralized protocol for saving, borrowing, and earning interest.
-
-**Mechanisms**:
-
-- [ ] **AkropolisOS**: Framework for creating decentralized finance applications.
-- [ ] **Sparta**: Lending and borrowing platform.
-- [ ] **AKRO Token**: Governance token for protocol decisions.
-- [ ] **Governance**: AKRO holders can vote on protocol changes.
-
----
-
-#### 78. **Kava**
+#### 59. **Kava**
 
 **Concept**: Kava is a decentralized lending platform that offers cross-chain assets.
 
@@ -991,7 +750,7 @@
 
 ---
 
-#### 79. **Liquity**
+#### 60. **Liquity**
 
 **Concept**: Liquity is a decentralized borrowing protocol that allows users to draw interest-free loans against Ether collateral.
 
@@ -1004,7 +763,7 @@
 
 ---
 
-#### 80. **Abracadabra.money**
+#### 61. **Abracadabra.money**
 
 **Concept**: Abracadabra.money is a decentralized lending platform that uses interest-bearing tokens (ibTKNs) as collateral.
 
@@ -1017,7 +776,7 @@
 
 ---
 
-#### 81. **MIM**
+#### 62. **MIM**
 
 **Concept**: Magic Internet Money (MIM) is a stablecoin minted by the Abracadabra.money platform.
 
@@ -1030,7 +789,7 @@
 
 ---
 
-#### 82. **Tokemak**
+#### 63. **Tokemak**
 
 **Concept**: Tokemak is a decentralized liquidity protocol that optimizes liquidity provision for DeFi projects.
 
@@ -1043,19 +802,7 @@
 
 ---
 
-#### 83. **Frax**
-
-**Concept**: Frax is a decentralized stablecoin protocol that aims to provide a scalable and decentralized stable currency.
-
-**Mechanisms**:
-
-- [ ] **Fractional Algorithmic Stablecoin**: Partially collateralized and algorithmically stabilized.
-- [ ] **Frax Shares (FXS)**: Governance and utility token.
-- [ ] **Governance**: FXS holders can vote on protocol changes.
-
----
-
-#### 84. **OlympusDAO**
+#### 64. **OlympusDAO**
 
 **Concept**: OlympusDAO is a decentralized reserve currency protocol.
 
@@ -1067,7 +814,7 @@
 
 ---
 
-#### 85. **KlimaDAO**
+#### 65. **KlimaDAO**
 
 **Concept**: KlimaDAO is a decentralized protocol focused on addressing climate change by incentivizing carbon offsetting.
 
@@ -1079,7 +826,7 @@
 
 ---
 
-#### 86. **Idle Finance**
+#### 66. **Idle Finance**
 
 **Concept**: Idle Finance is a decentralized yield aggregator that optimizes yield farming strategies.
 
@@ -1092,7 +839,7 @@
 
 ---
 
-#### 87. **Value DeFi**
+#### 67. **Value DeFi**
 
 **Concept**: Value DeFi is a decentralized finance protocol offering a suite of products for yield farming and decentralized exchanges.
 
@@ -1105,7 +852,7 @@
 
 ---
 
-#### 88. **InsurAce**
+#### 68. **InsurAce**
 
 **Concept**: InsurAce is a decentralized insurance protocol providing coverage for DeFi projects.
 
@@ -1118,7 +865,7 @@
 
 ---
 
-#### 89. **Nexus Mutual**
+#### 69. **Nexus Mutual**
 
 **Concept**: Nexus Mutual is a decentralized insurance protocol providing coverage for smart contract risks.
 
@@ -1131,7 +878,7 @@
 
 ---
 
-#### 90. **Cover Protocol**
+#### 70. **Cover Protocol**
 
 **Concept**: Cover Protocol is a decentralized insurance protocol providing coverage for smart contract risks.
 
@@ -1144,7 +891,7 @@
 
 ---
 
-#### 91. **Bridge Mutual**
+#### 71. **Bridge Mutual**
 
 **Concept**: Bridge Mutual is a decentralized insurance protocol providing coverage for smart contract risks.
 
@@ -1157,7 +904,7 @@
 
 ---
 
-#### 92. **Etherisc**
+#### 72. **Etherisc**
 
 **Concept**: Etherisc is a decentralized insurance protocol providing coverage for various risks.
 
@@ -1170,7 +917,7 @@
 
 ---
 
-#### 93. **Armor.fi**
+#### 73. **Armor.fi**
 
 **Concept**: Armor.fi is a decentralized insurance protocol providing coverage for smart contract risks.
 
@@ -1183,7 +930,7 @@
 
 ---
 
-#### 94. **Unslashed Finance**
+#### 74. **Unslashed Finance**
 
 **Concept**: Unslashed Finance is a decentralized insurance protocol providing coverage for various risks.
 
@@ -1193,5 +940,67 @@
 - [ ] **Staking**: Users can stake tokens to earn rewards.
 - [ ] **USF Token**: Governance token for protocol decisions.
 - [ ] **Governance**: USF holders can vote on protocol changes.
+
+---
+
+#### 75. **Opium**
+
+**Concept**: Opium is a decentralized derivatives platform offering a variety of financial instruments.
+
+**Mechanisms**:
+
+- [ ] **Derivatives Trading**: Users can trade various financial instruments.
+- [ ] **Staking**: Users can stake tokens to earn rewards.
+- [ ] **OPIUM Token**: Governance token for protocol decisions.
+- [ ] **Governance**: OPIUM holders can vote on protocol changes.
+
+---
+
+#### 76. **Gelato Network**
+
+**Concept**: Gelato Network is a protocol for automating smart contract executions on Ethereum.
+
+**Mechanisms**:
+
+- [ ] **Automation**: Schedule and automate smart contract executions.
+- [ ] **GEL Token**: Governance token for protocol decisions.
+- [ ] **Governance**: GEL holders can vote on protocol changes.
+
+---
+
+#### 77. **Lido**
+
+**Concept**: Lido is a decentralized protocol for liquid staking of Ethereum tokens.
+
+**Mechanisms**:
+
+- [ ] **Staking Liquidity**: Allows staked tokens to be used in DeFi.
+- [ ] **Liquid Staking**: Stake ETH without lockup periods.
+- [ ] **LDO Token**: Governance token for protocol decisions.
+- [ ] **Governance**: LDO holders can vote on protocol changes.
+
+---
+
+#### 78. **Alchemix**
+
+**Concept**: Alchemix is a decentralized protocol that allows users to create self-repaying loans.
+
+**Mechanisms**:
+
+- [ ] **Self-Repaying Loans**: Loans that repay themselves over time.
+- [ ] **ALCX Token**: Governance token for protocol decisions.
+- [ ] **Governance**: ALCX holders can vote on protocol changes.
+
+---
+
+#### 79. **Router Protocol**
+
+**Concept**: Router Protocol is a decentralized protocol for cross-chain liquidity aggregation.
+
+**Mechanisms**:
+
+- [ ] **Cross-Chain Liquidity**: Aggregate liquidity from multiple chains.
+- [ ] **ROUTE Token**: Governance token for protocol decisions.
+- [ ] **Governance**: ROUTE holders can vote on protocol changes.
 
 ---
