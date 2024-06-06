@@ -1,5 +1,5 @@
 mod contracts;
 
 fn main() {
-    contracts::run();
+    let _ = contracts::run().unwrap();
 }
