@@ -114,6 +114,7 @@
   - [X] Mock contracts
   - [ ] Property-based testing
   - [ ] Fuzz testing
+  - [ ] Invariant testing
   - [ ] Coverage analysis
 - [ ] Deployment and Upgrades
   - [X] Deployment scripts
