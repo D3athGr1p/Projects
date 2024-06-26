@@ -913,21 +913,146 @@ pub fn run() -> Result<(), Box<dyn Error>> {
         "abc".to_string(),
     )?;
 
-    // loop {
-    //     print_op::print_help_message();
-    //     let op: u8 = take_input("enter your choice").parse().unwrap();
-    //     match op {
-    //         op if op < 9 => print_op::print_help(op),
-    //         9 => {
-    //             println!("Existing the system");
-    //             break;
-    //         }
-    //         _ => {
-    //             println!("Invalid choice: {}", op);
-    //             continue;
-    //         }
-    //     }
-    // }
+    loop {
+        client.selector.print_all_keys();
+        let key = take_input("Type ").to_lowercase();
 
-    Ok(())
+        if !client.selector.get_keys().contains(&key.trim()) {
+            println!("\ninvalid type {}", key);
+            println!("\nSelect type from");
+            continue;
+        }
+
+        client.selector.print_with_key(key.trim());
+        let value = client.selector.get_values(key.trim());
+        let user_selected_function = take_input("function you want to work with ").to_lowercase();
+        let function_name = match value {
+            Some(value) => {
+                if !value
+                    .iter()
+                    .any(|&s| s.contains(user_selected_function.trim()))
+                {
+                    // if !value.contains(&user_selected_function.trim()) {
+                    println!("\ninvalid function {}\n", user_selected_function);
+                    continue;
+                }
+                user_selected_function.trim()
+            }
+            None => unreachable!(),
+        };
+
+        let _ = match function_name {
+            "get_block_count" => client.get_block_count(),
+            "get_latest_block_hash" => client.get_latest_block_hash(),
+            "get_block" => client.get_block(),
+            "get_best_block" => client.get_best_block(),
+            "get_network_info" => client.get_network_info(),
+            "get_index_info" => client.get_index_info(),
+            "version" => client.version(),
+            "load_wallet" => client.load_wallet(),
+            "unload_wallet" => client.unload_wallet(),
+            "list_wallets" => client.list_wallets(),
+            "list_wallet_dir" => client.list_wallet_dir(),
+            "get_wallet_info" => client.get_wallet_info(),
+            "backup_wallet" => client.backup_wallet(),
+            "dump_private_key" => client.dump_private_key(),
+            "encrypt_wallet" => client.encrypt_wallet(),
+            "get_difficulty" => client.get_difficulty(),
+            "get_connection_count" => client.get_connection_count(),
+            "get_block_hex" => client.get_block_hex(),
+            "get_block_info" => client.get_block_info(),
+            "get_block_header" => client.get_block_header(),
+            "get_mining_info" => client.get_mining_info(),
+            "get_blockchain_info" => client.get_blockchain_info(),
+            "get_best_block_hash" => client.get_best_block_hash(),
+            "get_block_hash" => client.get_block_hash(),
+            "get_block_stats" => client.get_block_stats(),
+            "get_balances" => client.get_balances(),
+            "get_received_by_address" => client.get_received_by_address(),
+            "set_label" => client.set_label(),
+            "key_pool_refill" => client.key_pool_refill(),
+            "lock_unspent" => client.lock_unspent(),
+            "unlock_unspent" => client.unlock_unspent(),
+            "unlock_unspent_all" => client.unlock_unspent_all(),
+            "stop" => client.stop(),
+            "get_raw_change_address" => client.get_raw_change_address(),
+            "get_address_info" => client.get_address_info(),
+            "generate" => client.generate(),
+            "invalidate_block" => client.invalidate_block(),
+            "reconsider_block" => client.reconsider_block(),
+            "get_mempool_entry" => client.get_mempool_entry(),
+            "get_raw_mempool" => client.get_raw_mempool(),
+            "get_chain_tips" => client.get_chain_tips(),
+            "add_node" => client.add_node(),
+            "remove_node" => client.remove_node(),
+            "onetry_node" => client.onetry_node(),
+            "disconnect_node" => client.disconnect_node(),
+            "disconnect_node_by_id" => client.disconnect_node_by_id(),
+            "get_added_node_info" => client.get_added_node_info(),
+            "list_banned" => client.list_banned(),
+            "clear_banned" => client.clear_banned(),
+            "add_ban" => client.add_ban(),
+            "remove_ban" => client.remove_ban(),
+            "set_network_active" => client.set_network_active(),
+            "get_peer_info" => client.get_peer_info(),
+            "ping" => client.ping(),
+            "send_raw_transaction" => client.send_raw_transaction(),
+            "wait_for_new_block" => client.wait_for_new_block(),
+            "get_descriptor_info" => client.get_descriptor_info(),
+            "join_psbt" => client.join_psbt(),
+            "combine_psbt" => client.combine_psbt(),
+            "combine_raw_transaction" => client.combine_raw_transaction(),
+            "finalize_psbt" => client.finalize_psbt(),
+            "derive_addresses" => client.derive_addresses(),
+            "get_net_totals" => client.get_net_totals(),
+            "get_network_hash_ps" => client.get_network_hash_ps(),
+            "uptime" => client.uptime(),
+            "submit_block" => client.submit_block(),
+            "submit_block_bytes" => client.submit_block_bytes(),
+            "submit_block_hex" => client.submit_block_hex(),
+            "add_multisig_address" => client.add_multisig_address(),
+            "create_wallet" => client.create_wallet(),
+            "get_block_header_info" => client.get_block_header_info(),
+            "get_block_template" => client.get_block_template(),
+            "get_block_stats_fields" => client.get_block_stats_fields(),
+            "get_raw_transaction" => client.get_raw_transaction(),
+            "get_raw_transaction_hex" => client.get_raw_transaction_hex(),
+            "get_raw_transaction_info" => client.get_raw_transaction_info(),
+            "get_block_filter" => client.get_block_filter(),
+            "get_balance" => client.get_balance(),
+            "get_transaction" => client.get_transaction(),
+            "list_transactions" => client.list_transactions(),
+            "list_since_block" => client.list_since_block(),
+            "get_tx_out_proof" => client.get_tx_out_proof(),
+            "import_public_key" => client.import_public_key(),
+            "import_private_key" => client.import_private_key(),
+            "import_address" => client.import_address(),
+            "import_address_script" => client.import_address_script(),
+            "import_multi" => client.import_multi(),
+            "import_descriptors" => client.import_descriptors(),
+            "list_unspent" => client.list_unspent(),
+            "list_received_by_address" => client.list_received_by_address(),
+            "create_psbt" => client.create_psbt(),
+            "create_raw_transaction_hex" => client.create_raw_transaction_hex(),
+            "create_raw_transaction" => client.create_raw_transaction(),
+            "decode_raw_transaction" => client.decode_raw_transaction(),
+            "fund_raw_transaction" => client.fund_raw_transaction(),
+            "sign_raw_transaction" => client.sign_raw_transaction(),
+            "sign_raw_transaction_with_wallet" => client.sign_raw_transaction_with_wallet(),
+            "sign_raw_transaction_with_key" => client.sign_raw_transaction_with_key(),
+            "verify_message" => client.verify_message(),
+            "get_new_address" => client.get_new_address(),
+            "generate_to_address" => client.generate_to_address(),
+            "get_raw_mempool_verbose" => client.get_raw_mempool_verbose(),
+            "send_to_address" => client.send_to_address(),
+            "get_node_addresses" => client.get_node_addresses(),
+            "estimate_smart_fee" => client.estimate_smart_fee(),
+            "wallet_create_funded_psbt" => client.wallet_create_funded_psbt(),
+            "wallet_process_psbt" => client.wallet_process_psbt(),
+            "rescan_blockchain" => client.rescan_blockchain(),
+            "get_tx_out_set_info" => client.get_tx_out_set_info(),
+            "scan_tx_out_set_blocking" => client.scan_tx_out_set_blocking(),
+            _ => unreachable!(),
+        };
+    }
 }
