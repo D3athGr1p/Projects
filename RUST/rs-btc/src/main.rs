@@ -1,12 +1,13 @@
 extern crate bitcoincore_rpc;
 
 use std::error::Error;
-mod client;
+pub mod client;
+pub mod helper;
 
-use client::run;
+use client::clients;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    if let Err(e) = run() {
+    if let Err(e) = clients::run() {
         eprintln!("Error occurred: {}", e);
     }
 
