@@ -1,3 +1,4 @@
+use crate::client::selection::Selector;
 use crate::helper::print_op;
 
 use bitcoincore_rpc::{
@@ -30,19 +31,30 @@ use bitcoincore_rpc::{
 };
 use std::{collections::HashMap, error::Error};
 
-pub struct Clients {
+pub struct Clients<'a> {
     rpc: Client,
+    selector: Selector<'a>,
 }
 
-impl Clients {
+impl<'a> Clients<'a> {
     fn new(
         rpc_url: &str,
         rpc_user: String,
         rpc_password: String,
     ) -> Result<Clients, Box<dyn Error>> {
         let rpc = Client::new(rpc_url, Auth::UserPass(rpc_user, rpc_password))?;
+        let mut selector = Selector::new();
 
-        Ok(Clients { rpc })
+        selector.insert_block_kv();
+        selector.insert_blockchain_kv();
+        selector.insert_transaction_kv();
+        selector.insert_wallet_kv();
+        selector.insert_network_kv();
+        selector.insert_utils_kv();
+        selector.insert_psbt_kv();
+        selector.get_keys();
+
+        Ok(Clients { rpc, selector })
     }
 
     fn get_block_count(&self) -> u64 {
@@ -886,31 +898,36 @@ fn take_input(message: &str) -> String {
 }
 
 pub fn run() -> Result<(), Box<dyn Error>> {
-    let rpc_url = take_input("rpc url");
-    let rpc_user = take_input("rpc user");
-    let rpc_password = take_input("rpc password");
+    // let rpc_url = take_input("rpc url");
+    // let rpc_user = take_input("rpc user");
+    // let rpc_password = take_input("rpc password");
 
+    // let client = Clients::new(
+    //     &rpc_url,     // "http://localhost:8332",
+    //     rpc_user,     // "abc".to_string(),
+    //     rpc_password, // "abc".to_string(),
+    // )?;
     let client = Clients::new(
-        &rpc_url,     // "http://localhost:8332",
-        rpc_user,     // "abc".to_string(),
-        rpc_password, // "abc".to_string(),
+        "http://localhost:8332",
+        "abc".to_string(),
+        "abc".to_string(),
     )?;
 
-    loop {
-        print_op::print_help_message();
-        let op: u8 = take_input("enter your choice").parse().unwrap();
-        match op {
-            op if op < 9 => print_op::print_help(op),
-            9 => {
-                println!("Existing the system");
-                break;
-            }
-            _ => {
-                println!("Invalid choice: {}", op);
-                continue;
-            }
-        }
-    }
+    // loop {
+    //     print_op::print_help_message();
+    //     let op: u8 = take_input("enter your choice").parse().unwrap();
+    //     match op {
+    //         op if op < 9 => print_op::print_help(op),
+    //         9 => {
+    //             println!("Existing the system");
+    //             break;
+    //         }
+    //         _ => {
+    //             println!("Invalid choice: {}", op);
+    //             continue;
+    //         }
+    //     }
+    // }
 
     Ok(())
 }

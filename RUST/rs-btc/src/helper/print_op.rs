@@ -47,7 +47,6 @@ pub fn print_tx_functions() {
     println!("      get_raw_transaction_info");
     println!("      get_tx_out_proof");
     println!("      get_tx_out_set_info");
-    println!("      get_raw_transaction_info");
     println!("      decode_raw_transaction");
     println!("\nWrite Functions");
     println!("      send_raw_transaction");
