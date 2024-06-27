@@ -1,16 +1,15 @@
 use crate::client::{
     selection::Selector,
-    utils::{get_String_array, get_address, get_block_number, get_bool, prettify_data},
+    utils::{get_address, get_block_number, get_bool, get_string_array, prettify_data},
 };
 
 use bitcoincore_rpc::{
     bitcoin::{
-        absolute::Height,
         address::{NetworkChecked, NetworkUnchecked},
         block::Header,
         secp256k1::ecdsa::Signature,
-        Address, Amount, Block, BlockHash, Network, OutPoint, PrivateKey, PublicKey, Script,
-        Transaction, Txid,
+        Address, Amount, Block, BlockHash, OutPoint, PrivateKey, PublicKey, Script, Transaction,
+        Txid,
     },
     json::{
         AddMultiSigAddressResult, AddressType, BlockRef, BlockStatsFields,
@@ -34,7 +33,7 @@ use bitcoincore_rpc::{
 };
 use std::{collections::HashMap, error::Error};
 
-use super::utils::{get_node_address, print_object};
+use super::utils::{get_node_address, get_txid_array, print_hashmap, print_object};
 
 pub struct Clients<'a> {
     rpc: Client,
@@ -1046,9 +1045,9 @@ pub fn run() -> Result<(), Box<dyn Error>> {
             println!("{}", data);
         } else if function_name == "set_label" {
             let address = get_address();
-            let label = take_input("label").as_ref();
+            let label = take_input("label");
 
-            client.set_label(&address, label).unwrap();
+            client.set_label(&address, label.trim()).unwrap();
         } else if function_name == "key_pool_refill" {
             let size = take_input("new_size").parse().unwrap();
             client.key_pool_refill(Some(size)).unwrap();
@@ -1147,15 +1146,15 @@ pub fn run() -> Result<(), Box<dyn Error>> {
             let data = client.get_descriptor_info(&input).unwrap();
             prettify_data(data);
         } else if function_name == "join_psbt" {
-            let data = get_String_array("psbt array");
+            let data = get_string_array("psbt array");
             let data = client.join_psbt(&data).unwrap();
             println!("{}", data);
         } else if function_name == "combine_psbt" {
-            let data = get_String_array("psbt array");
+            let data = get_string_array("psbt array");
             let data = client.combine_psbt(&data).unwrap();
             println!("{}", data);
         } else if function_name == "combine_raw_transaction" {
-            let data = get_String_array("raw transaction array");
+            let data = get_string_array("raw transaction array");
             let data = client.combine_raw_transaction(&data).unwrap();
             println!("{}", data);
         } else if function_name == "finalize_psbt" {
@@ -1184,25 +1183,25 @@ pub fn run() -> Result<(), Box<dyn Error>> {
         // } else if function_name == "submit_block_bytes" {
         //     client.submit_block_bytes().unwrap();
         } else if function_name == "submit_block_hex" {
-            let nblocks = take_input("block hex").trim();
+            let nblocks = take_input("block hex");
 
-            client.submit_block_hex(nblocks).unwrap();
+            client.submit_block_hex(nblocks.trim()).unwrap();
         // } else if function_name == "add_multisig_address" {
         //     let data = client.add_multisig_address().unwrap();
         //     prettify_data(data);
         } else if function_name == "create_wallet" {
-            let wallet = take_input("wallet").trim();
+            let wallet = take_input("wallet");
             let disable_private_keys = get_bool("disable private keys");
             let blank = get_bool("blank");
-            let passphrase = take_input("passphrase").trim();
+            let passphrase = take_input("passphrase");
             let avoid_reuse = get_bool("avoid reuse");
 
             let data = client
                 .create_wallet(
-                    wallet,
+                    wallet.trim(),
                     Some(disable_private_keys),
                     Some(blank),
-                    Some(passphrase),
+                    Some(passphrase.trim()),
                     Some(avoid_reuse),
                 )
                 .unwrap();
@@ -1219,112 +1218,195 @@ pub fn run() -> Result<(), Box<dyn Error>> {
         //     let data = client.get_block_stats_fields().unwrap();
         //     prettify_data(data);
         } else if function_name == "get_raw_transaction" {
-            let data = client.get_raw_transaction().unwrap();
+            let tx_id = take_input("transaction id ").parse().unwrap();
+            let height = get_block_number();
+            let block_hash = client.get_block_hash(height).unwrap();
+            let data = client
+                .get_raw_transaction(&tx_id, Some(&block_hash))
+                .unwrap();
             prettify_data(data);
         } else if function_name == "get_raw_transaction_hex" {
-            let data = client.get_raw_transaction_hex().unwrap();
+            let tx_id = take_input("transaction id ").parse().unwrap();
+            let height = get_block_number();
+            let block_hash = client.get_block_hash(height).unwrap();
+            let data = client
+                .get_raw_transaction_hex(&tx_id, Some(&block_hash))
+                .unwrap();
             println!("{}", data);
         } else if function_name == "get_raw_transaction_info" {
-            let data = client.get_raw_transaction_info().unwrap();
+            let tx_id = take_input("transaction id ").parse().unwrap();
+            let height = get_block_number();
+            let block_hash = client.get_block_hash(height).unwrap();
+            let data = client
+                .get_raw_transaction_info(&tx_id, Some(&block_hash))
+                .unwrap();
             prettify_data(data);
         } else if function_name == "get_block_filter" {
-            let data = client.get_block_filter().unwrap();
+            let height = get_block_number();
+            let block_hash = client.get_block_hash(height).unwrap();
+            let data = client.get_block_filter(&block_hash).unwrap();
             prettify_data(data);
         } else if function_name == "get_balance" {
-            let data = client.get_balance().unwrap();
+            let min_conf = take_input("minimum confirmation").parse().unwrap();
+            let include_watchonly = get_bool("include_watchonly");
+            let data = client
+                .get_balance(Some(min_conf), Some(include_watchonly))
+                .unwrap();
             prettify_data(data);
         } else if function_name == "get_transaction" {
-            let data = client.get_transaction().unwrap();
+            let tx_id = take_input("transaction id ").parse().unwrap();
+            let include_watchonly = get_bool("include_watchonly");
+            let data = client
+                .get_transaction(&tx_id, Some(include_watchonly))
+                .unwrap();
             prettify_data(data);
         } else if function_name == "list_transactions" {
-            let data = client.list_transactions().unwrap();
+            let label = take_input("label");
+            let count = take_input("count").parse().unwrap();
+            let skip = take_input("skip").parse().unwrap();
+            let include_watchonly = get_bool("include_watchonly");
+
+            let data = client
+                .list_transactions(
+                    Some(label.trim()),
+                    Some(count),
+                    Some(skip),
+                    Some(include_watchonly),
+                )
+                .unwrap();
             print_object(data);
         } else if function_name == "list_since_block" {
-            let data = client.list_since_block().unwrap();
+            let height = get_block_number();
+            let block_hash = client.get_block_hash(height).unwrap();
+            let target_confirmations = take_input("count").parse().unwrap();
+            let include_watchonly = get_bool("include_watchonly");
+            let include_removed = get_bool("include_removed");
+            let data = client
+                .list_since_block(
+                    Some(&block_hash),
+                    Some(target_confirmations),
+                    Some(include_watchonly),
+                    Some(include_removed),
+                )
+                .unwrap();
             prettify_data(data);
         } else if function_name == "get_tx_out_proof" {
-            let data = client.get_tx_out_proof().unwrap();
+            let tx_id = get_txid_array("transaction id array");
+            let height = get_block_number();
+            let block_hash = client.get_block_hash(height).unwrap();
+            let data = client.get_tx_out_proof(&tx_id, Some(&block_hash)).unwrap();
             print_object(data);
-        } else if function_name == "import_public_key" {
-            client.import_public_key().unwrap();
-        } else if function_name == "import_private_key" {
-            client.import_private_key().unwrap();
-        } else if function_name == "import_address" {
-            client.import_address().unwrap();
-        } else if function_name == "import_address_script" {
-            client.import_address_script().unwrap();
-        } else if function_name == "import_multi" {
-            let data = client.import_multi().unwrap();
-            print_object(data);
-        } else if function_name == "import_descriptors" {
-            let data = client.import_descriptors().unwrap();
-            print_object(data);
-        } else if function_name == "list_unspent" {
-            let data = client.list_unspent().unwrap();
-            print_object(data);
+        // } else if function_name == "import_public_key" {
+        //     client.import_public_key().unwrap();
+        // } else if function_name == "import_private_key" {
+        //     client.import_private_key().unwrap();
+        // } else if function_name == "import_address" {
+        //     client.import_address().unwrap();
+        // } else if function_name == "import_address_script" {
+        //     client.import_address_script().unwrap();
+        // } else if function_name == "import_multi" {
+        //     let data = client.import_multi().unwrap();
+        //     print_object(data);
+        // } else if function_name == "import_descriptors" {
+        //     let data = client.import_descriptors().unwrap();
+        //     print_object(data);
+        // } else if function_name == "list_unspent" {
+        //     let data = client.list_unspent().unwrap();
+        //     print_object(data);
         } else if function_name == "list_received_by_address" {
-            let data = client.list_received_by_address().unwrap();
+            let address_filter = get_address();
+            let min_conf = take_input("minimum confirmation").parse().unwrap();
+            let include_empty = get_bool("include empty");
+            let include_watchonly = get_bool("include watchonly");
+
+            let data = client
+                .list_received_by_address(
+                    Some(&address_filter),
+                    Some(min_conf),
+                    Some(include_empty),
+                    Some(include_watchonly),
+                )
+                .unwrap();
             print_object(data);
-        } else if function_name == "create_psbt" {
-            let data = client.create_psbt().unwrap();
-            println!("{}", data);
-        } else if function_name == "create_raw_transaction_hex" {
-            let data = client.create_raw_transaction_hex().unwrap();
-            println!("{}", data);
-        } else if function_name == "create_raw_transaction" {
-            let data = client.create_raw_transaction().unwrap();
-            prettify_data(data);
+        // } else if function_name == "create_psbt" {
+        //     let data = client.create_psbt().unwrap();
+        //     println!("{}", data);
+        // } else if function_name == "create_raw_transaction_hex" {
+        //     let data = client.create_raw_transaction_hex().unwrap();
+        //     println!("{}", data);
+        // } else if function_name == "create_raw_transaction" {
+        //     let data = client.create_raw_transaction().unwrap();
+        //     prettify_data(data);
         } else if function_name == "decode_raw_transaction" {
-            let data = client.decode_raw_transaction().unwrap();
+            let tx = take_input("enter transaction");
+            let is_witness = get_bool("is witness");
+
+            let data = client
+                .decode_raw_transaction(tx.trim(), Some(is_witness))
+                .unwrap();
             prettify_data(data);
-        } else if function_name == "fund_raw_transaction" {
-            let data = client.fund_raw_transaction().unwrap();
-            prettify_data(data);
-        } else if function_name == "sign_raw_transaction" {
-            let data = client.sign_raw_transaction().unwrap();
-            prettify_data(data);
-        } else if function_name == "sign_raw_transaction_with_wallet" {
-            let data = client.sign_raw_transaction_with_wallet().unwrap();
-            prettify_data(data);
-        } else if function_name == "sign_raw_transaction_with_key" {
-            let data = client.sign_raw_transaction_with_key().unwrap();
-            prettify_data(data);
+        // } else if function_name == "fund_raw_transaction" {
+        //     let data = client.fund_raw_transaction().unwrap();
+        //     prettify_data(data);
+        // } else if function_name == "sign_raw_transaction" {
+        //     let data = client.sign_raw_transaction().unwrap();
+        //     prettify_data(data);
+        // } else if function_name == "sign_raw_transaction_with_wallet" {
+        //     let data = client.sign_raw_transaction_with_wallet().unwrap();
+        //     prettify_data(data);
+        // } else if function_name == "sign_raw_transaction_with_key" {
+        //     let data = client.sign_raw_transaction_with_key().unwrap();
+        //     prettify_data(data);
         } else if function_name == "verify_message" {
-            let data = client.verify_message().unwrap();
+            let address = get_address();
+            let signature = take_input("signature").parse().unwrap();
+            let message = take_input("message");
+
+            let data = client
+                .verify_message(&address, &signature, message.trim())
+                .unwrap();
             println!("{}", data);
         } else if function_name == "get_new_address" {
-            let data = client.get_new_address().unwrap();
+            let label = take_input("label");
+            let data = client.get_new_address(Some(label.trim()), None).unwrap();
             prettify_data(data);
         } else if function_name == "generate_to_address" {
-            let data = client.generate_to_address().unwrap();
+            let height = get_block_number();
+            let address = get_address();
+            let data = client.generate_to_address(height, &address).unwrap();
             print_object(data);
-        } else if function_name == "get_raw_mempool_verbose" {
-            let data = client.get_raw_mempool_verbose().unwrap();
-            println!("{:?}", data);
-        } else if function_name == "send_to_address" {
-            let data = client.send_to_address().unwrap();
-            prettify_data(data);
+        // } else if function_name == "get_raw_mempool_verbose" {
+        //     let data = client.get_raw_mempool_verbose().unwrap();
+        //     print_hashmap(data);
+        // } else if function_name == "send_to_address" {
+        //     let data = client.send_to_address().unwrap();
+        //     prettify_data(data);
         } else if function_name == "get_node_addresses" {
-            let data = client.get_node_addresses().unwrap();
+            let count = take_input("count").trim().parse().unwrap();
+            let data = client.get_node_addresses(Some(count)).unwrap();
             print_object(data);
-        } else if function_name == "estimate_smart_fee" {
-            let data = client.estimate_smart_fee().unwrap();
-            prettify_data(data);
-        } else if function_name == "wallet_create_funded_psbt" {
-            let data = client.wallet_create_funded_psbt().unwrap();
-            prettify_data(data);
-        } else if function_name == "wallet_process_psbt" {
-            let data = client.wallet_process_psbt().unwrap();
-            prettify_data(data);
+        // } else if function_name == "estimate_smart_fee" {
+        //     let data = client.estimate_smart_fee().unwrap();
+        //     prettify_data(data);
+        // } else if function_name == "wallet_create_funded_psbt" {
+        //     let data = client.wallet_create_funded_psbt().unwrap();
+        //     prettify_data(data);
+        // } else if function_name == "wallet_process_psbt" {
+        //     let data = client.wallet_process_psbt().unwrap();
+        //     prettify_data(data);
         } else if function_name == "rescan_blockchain" {
-            let data = client.rescan_blockchain().unwrap();
+            let start_from = take_input("start from").trim().parse().unwrap();
+            let stop_height = take_input("stop from").trim().parse().unwrap();
+            let data = client
+                .rescan_blockchain(Some(start_from), Some(stop_height))
+                .unwrap();
             println!("{:?}", data);
-        } else if function_name == "get_tx_out_set_info" {
-            let data = client.get_tx_out_set_info().unwrap();
-            prettify_data(data);
-        } else if function_name == "scan_tx_out_set_blocking" {
-            let data = client.scan_tx_out_set_blocking().unwrap();
-            prettify_data(data);
+            // } else if function_name == "get_tx_out_set_info" {
+            //     let data = client.get_tx_out_set_info().unwrap();
+            //     prettify_data(data);
+            // } else if function_name == "scan_tx_out_set_blocking" {
+            //     let data = client.scan_tx_out_set_blocking().unwrap();
+            //     prettify_data(data);
         }
     }
 }

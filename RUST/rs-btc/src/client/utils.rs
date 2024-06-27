@@ -1,4 +1,4 @@
-use bitcoincore_rpc::bitcoin::{hashes::Hash, hex::FromHex, Address, Network, PubkeyHash};
+use bitcoincore_rpc::bitcoin::{hashes::Hash, hex::FromHex, Address, Network, PubkeyHash, Txid};
 use serde::Serialize;
 
 fn take_input(message: &str) -> String {
@@ -32,12 +32,12 @@ pub fn prettify_data<T: Serialize>(data: T) {
 
 pub fn print_object<T: Serialize>(data: Vec<T>) {
     for item in data.iter() {
-        prettify_data(data);
+        prettify_data(item);
     }
 }
 
 pub fn get_bool(message: &str) -> bool {
-    let mut result;
+    let result;
     loop {
         let input = take_input(message).parse().unwrap();
         result = match input {
@@ -54,7 +54,7 @@ pub fn get_bool(message: &str) -> bool {
     result
 }
 
-pub fn get_String_array(message: &str) -> Vec<String> {
+pub fn get_string_array(message: &str) -> Vec<String> {
     let mut vecs = Vec::new();
     let count = take_input(message).parse().unwrap();
     let mut i = 0;
@@ -65,4 +65,25 @@ pub fn get_String_array(message: &str) -> Vec<String> {
     }
 
     vecs
+}
+
+pub fn get_txid_array(message: &str) -> Vec<Txid> {
+    let mut vecs = Vec::new();
+    let count = take_input(message).parse().unwrap();
+    let mut i = 0;
+    while i < count {
+        let input = take_input(&format!("input {i}")).parse().unwrap();
+        vecs.push(input);
+        i += 1;
+    }
+
+    vecs
+}
+
+pub fn print_hashmap<T: IntoIterator<Item = (U, Z)>, U: std::fmt::Debug, Z: std::fmt::Debug>(
+    map: T,
+) {
+    for (key, value) in map {
+        println!("{:#?} : {:#?}", key, value);
+    }
 }
