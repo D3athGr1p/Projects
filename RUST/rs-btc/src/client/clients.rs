@@ -33,7 +33,7 @@ use bitcoincore_rpc::{
 };
 use std::{collections::HashMap, error::Error};
 
-use super::utils::{get_node_address, get_txid_array, print_hashmap, print_object};
+use super::utils::{get_node_address, get_txid_array, print_object};
 
 pub struct Clients<'a> {
     rpc: Client,
