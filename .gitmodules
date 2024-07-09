@@ -1,3 +1,18 @@
 [submodule "Solidity/1-horse-store/lib/forge-std"]
 	path = Solidity/1-horse-store/lib/forge-std
 	url = https://github.com/foundry-rs/forge-std
+[submodule "Solidity/flash-loans/lib/forge-std"]
+	path = Solidity/flash-loans/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "Solidity/flash-loans/lib/openzeppelin-contracts"]
+	path = Solidity/flash-loans/lib/openzeppelin-contracts
+	url = https://github.com/openzeppelin/openzeppelin-contracts
+[submodule "Solidity/flash-loans/lib/aave-v3-core"]
+	path = Solidity/flash-loans/lib/aave-v3-core
+	url = https://github.com/aave/aave-v3-core
+[submodule "Solidity/private-data/lib/forge-std"]
+	path = Solidity/private-data/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
+[submodule "Solidity/delegateCall/lib/forge-std"]
+	path = Solidity/delegateCall/lib/forge-std
+	url = https://github.com/foundry-rs/forge-std
