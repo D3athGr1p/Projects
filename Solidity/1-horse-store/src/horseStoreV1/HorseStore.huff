@@ -1,0 +1,10 @@
+
+#define macro MAIN() = takes(0) returns(0) {
+    // 0x00                    // [0] this will ignore the first bytes of calldata so we are ignoring 0 bytes
+    // // 0x02                 // TOP [2, 0] BOTTOM
+    // calldataload            // [calldata]
+    // 0xe0                    // [0xe0, calldata (32)] // 224 bits // 224 / 8 = 28 bytes
+    // shr                     // [function_selector]
+
+    0x00 calldataload 0xe0 shr // [function_selector]
+}
